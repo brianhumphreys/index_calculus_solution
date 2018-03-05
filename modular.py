@@ -15,13 +15,17 @@ These are the functions that I personally wrote and tested
 #inputs a negative number and modulus p. Converts negative to corresponding positive value in mod p space
 def convert_neg(neg, p):
     if neg < 0:
+        
         neg = abs(neg)
+        
         neg = neg % p
+        
         return p - neg
-
+    else:
+        return neg
 #############################################
 #            MATRICIES AAAAAAA              #
-#############################################
+############################################
 
 
 #Inputs : Numpy matrix - A, integer modulus p 
@@ -45,12 +49,34 @@ def create_inverse(in_matrix, p):
         scalar = modinv(in_matrix[x][x], p)
         
         in_matrix[x] = (in_matrix[x] * scalar) % p
-        identity_mat[x] = (inentity_mat[x] * scalar) % p
+        identity_mat[x] = (identity_mat[x] * scalar) % p
         
         for y in range(y_dim):
+            # row reduction operations
+            print("row reduction")
+            row_reductor = []
+            if x != y:
+                
+                reductor_scalar = convert_neg(matrix[x][y], p) 
+                #print(matrix[x][y])
+                #reductor_scalar = matrix[x][y]
+                #print(reductor_scalar)
+            
+                for index in range(len(in_matrix[x])):
+                    scaled_value = (in_matrix[x][index] * reductor_scalar) % p
+                    print("to be converter: ", in_matrix[y][index], "diag: ", in_matrix[x][index], "scaled: ", scaled_value)
+                    print(in_matrix)
+                    in_matrix[y][index] = (in_matrix[y][index] + scaled_value ) % p
+                    identity_mat[y][index] = (identity_mat[y][index] + scaled_value ) % p
+                    print(in_matrix)
+                
+                
+                
+                
+            
         
         
-        print(in_matrix)
+        
 
 
 #def perform_operation()
@@ -91,15 +117,17 @@ def matrix_cofactor(matrix):
 
 ### ---------- TESTING ---------- ###
 
-test = convert_neg(-20, 101)
-modinv(-20, 101)
-modinv(test, 101)
+#test = convert_neg(-20, 101)
+#modinv(-20, 101)
+#modinv(test, 101)
 
-my_mat = np.array([[5, 3],
-                   [-3, 5]])
+my_mat = np.array([[8, 3, 7],
+                   [-3, 5, 5],
+                   [3, 54, 73]])
+print(my_mat)
 
 create_inverse(my_mat, 101)
-
+#convert_neg()
 
 
 '''

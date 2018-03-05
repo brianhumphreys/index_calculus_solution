@@ -29,7 +29,7 @@ g = 5
 #primeCountMatrix = []
 
 #set empty prime list
-S = [2,3]
+S = [2,3,7,9,11,]
 
 def set_s(largestPrime, base):
     primeList = sieve.primerange(2, largestPrime+1)
