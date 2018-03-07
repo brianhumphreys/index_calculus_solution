@@ -9,7 +9,6 @@ Created on Fri Mar  2 18:03:55 2018
 import math
 import random
 import modular
-import flint
 import numpy as np
 from sympy import sieve
 

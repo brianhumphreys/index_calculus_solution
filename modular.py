@@ -23,6 +23,9 @@ def convert_neg(neg, p):
         return p - neg
     else:
         return neg
+    
+def multiply_mod_neg_one(num, p):
+    return p - num
 #############################################
 #            MATRICIES AAAAAAA              #
 ############################################
@@ -41,6 +44,7 @@ def create_inverse(in_matrix, p):
     #real code to create inverse
     else:
         identity_mat = np.identity(x_dim)
+        identity_mat = np.array(identity_mat)
         print(identity_mat)
         
     #perform RREF operations in a modular space
@@ -51,25 +55,21 @@ def create_inverse(in_matrix, p):
         in_matrix[x] = (in_matrix[x] * scalar) % p
         identity_mat[x] = (identity_mat[x] * scalar) % p
         
+        
         for y in range(y_dim):
-            # row reduction operations
-            print("row reduction")
-            row_reductor = []
+            
+            # row reduction operation 
             if x != y:
                 
-                reductor_scalar = convert_neg(matrix[x][y], p) 
-                #print(matrix[x][y])
-                #reductor_scalar = matrix[x][y]
-                #print(reductor_scalar)
+                reductor_scalar = multiply_mod_neg_one(in_matrix[y], p) 
             
-                for index in range(len(in_matrix[x])):
-                    scaled_value = (in_matrix[x][index] * reductor_scalar) % p
-                    print("to be converter: ", in_matrix[y][index], "diag: ", in_matrix[x][index], "scaled: ", scaled_value)
-                    print(in_matrix)
-                    in_matrix[y][index] = (in_matrix[y][index] + scaled_value ) % p
-                    identity_mat[y][index] = (identity_mat[y][index] + scaled_value ) % p
-                    print(in_matrix)
+                in_matrix[y] = (in_matrix[y] + (in_matrix[x] * reductor_scalar)) % p
+                identity_mat[y] = (identity_mat[y] + (identity_mat[x] * reductor_scalar)) % p
+                print(identity_mat)
                 
+    print(identity_mat)
+                
+    
                 
                 
                 
@@ -96,7 +96,7 @@ def egcd(a, b):
 
 def modinv(a, m):
     if a < 0:
-        a = a + m
+        a = convert_neg(a)
     g, x, y = egcd(a, m)
     if g != 1:
         print ("g is : ", g)
@@ -121,12 +121,13 @@ def matrix_cofactor(matrix):
 #modinv(-20, 101)
 #modinv(test, 101)
 
-my_mat = np.array([[8, 3, 7],
-                   [-3, 5, 5],
-                   [3, 54, 73]])
+my_mat = np.array([[1, 0, 2, 1],
+                   [1, 1, 1, 0],
+                   [0, 1, 2, 1],
+                   [1, 0, 1, 2]])
 print(my_mat)
 
-create_inverse(my_mat, 101)
+create_inverse(my_mat, 2017)
 #convert_neg()
 
 
