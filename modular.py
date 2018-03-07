@@ -46,10 +46,13 @@ def create_inverse(in_matrix, p):
         identity_mat = np.identity(x_dim)
         identity_mat = np.array(identity_mat)
         print(identity_mat)
+        identity_mat.astype(int)
+        print(identity_mat)
         
     #perform RREF operations in a modular space
     for x in range(x_dim):
         #find mod inverse to 
+        print("diag: ", in_matrix[x][x])
         scalar = modinv(in_matrix[x][x], p)
         
         in_matrix[x] = (in_matrix[x] * scalar) % p
@@ -58,6 +61,8 @@ def create_inverse(in_matrix, p):
         
         for y in range(y_dim):
             
+            
+            
             # row reduction operation 
             if x != y:
                 
@@ -65,6 +70,7 @@ def create_inverse(in_matrix, p):
             
                 in_matrix[y] = (in_matrix[y] + (in_matrix[x] * reductor_scalar)) % p
                 identity_mat[y] = (identity_mat[y] + (identity_mat[x] * reductor_scalar)) % p
+                
                 print(identity_mat)
                 
     print(identity_mat)
@@ -125,7 +131,15 @@ my_mat = np.array([[1, 0, 2, 1],
                    [1, 1, 1, 0],
                    [0, 1, 2, 1],
                    [1, 0, 1, 2]])
+
+x = np.array([[1,2,3],
+              [4,5,6],
+              [8,9,3]])
 print(my_mat)
+my_mat.astype(int)
+print(my_mat)
+
+
 
 create_inverse(my_mat, 2017)
 #convert_neg()
