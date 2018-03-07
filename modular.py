@@ -47,12 +47,13 @@ def create_inverse(in_matrix, p):
         identity_mat = np.array(identity_mat)
         print(identity_mat)
         identity_mat.astype(int)
-        print(identity_mat)
+        print(in_matrix)
         
     #perform RREF operations in a modular space
     for x in range(x_dim):
-        #find mod inverse to 
-        print("diag: ", in_matrix[x][x])
+        #find mod inverse to
+        
+        print("==================\n", "diag: ", x, "\n=====================")
         scalar = modinv(in_matrix[x][x], p)
         
         in_matrix[x] = (in_matrix[x] * scalar) % p
@@ -64,14 +65,22 @@ def create_inverse(in_matrix, p):
             
             
             # row reduction operation 
-            if x != y:
+            if (x != y) and (in_matrix[y][x] != 0):
                 
-                reductor_scalar = multiply_mod_neg_one(in_matrix[y], p) 
-            
-                in_matrix[y] = (in_matrix[y] + (in_matrix[x] * reductor_scalar)) % p
-                identity_mat[y] = (identity_mat[y] + (identity_mat[x] * reductor_scalar)) % p
                 
-                print(identity_mat)
+                print("------------------------\n", "position: ", x, y, "\nbefore negative:", in_matrix[y], "\n")
+                
+                reductor_scalar = multiply_mod_neg_one(in_matrix[y][x], p) 
+                
+                print("negative value:", reductor_scalar,"\n")
+                
+                print("Before operation:\n", in_matrix, "\n")
+                
+                print("\n", (in_matrix[x] * reductor_scalar) % p, "\n")
+                in_matrix[y] = (in_matrix[y] + ((in_matrix[x] * reductor_scalar) % p)) % p
+                identity_mat[y] = (identity_mat[y] + ((identity_mat[x] * reductor_scalar)% p)) % p
+                
+                print("After operation:\n", in_matrix, "\n")
                 
     print(identity_mat)
                 
@@ -131,13 +140,12 @@ my_mat = np.array([[1, 0, 2, 1],
                    [1, 1, 1, 0],
                    [0, 1, 2, 1],
                    [1, 0, 1, 2]])
+print(np.linalg.det(my_mat))
 
 x = np.array([[1,2,3],
               [4,5,6],
               [8,9,3]])
-print(my_mat)
-my_mat.astype(int)
-print(my_mat)
+
 
 
 
